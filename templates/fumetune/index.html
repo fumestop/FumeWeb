@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>FumeGuard | FumeStop</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+                {% include 'navbar.html' %}
+
+				<section id="banner">
+					<div class="content">
+						<header>
+							<h2>Meet <code>FumeTune#1690</code> &#128526; </h2>
+							<p>Hello there! &#128075; <br>
+							I am a music-playing Discord bot. You can play tracks <br>
+                            from YouTube or Spotify. I boast a plethora of commands <br>
+                            to provide a seamless music listening experience for <br>
+                            your server. Add me to your server today!
+                            </p>
+						</header>
+						<span class="image">
+                            <img alt="logo" src="/assets/images/FumeTune.png">
+                        </span>
+					</div>
+					<a href="#statistics" class="goto-next scrolly">Next</a>
+				</section>
+
+				<section id="statistics" class="wrapper style2 special fade">
+					<div class="container">
+						<header class="major-alt">
+							<h2>Statistics</h2>
+                            <p>Here's how I'm performing at present. Add me to your server today!</p>
+						</header>
+						<div class="row gtr-uniform">
+    							<section class="col-4 col-6-medium col-12-xsmall">
+									<h3>Servers</h3>
+									<p>{{ server_count }}</p>
+								</section>
+								<section class="col-4 col-6-medium col-12-xsmall">
+									<h3>Users</h3>
+									<p>{{ user_count }}</p>
+								</section>
+								<section class="col-4 col-6-medium col-12-xsmall">
+									<h3>Commands</h3>
+									<p>{{ command_count }}</p>
+								</section>
+							</div>
+					</div>
+                    <footer class="major">
+    					<ul class="actions special">
+							<li><a href="{{ url_for('fumetune._invite') }}" class="button">Invite</a></li>
+						</ul>
+					</footer>
+				</section>
+
+			{% include 'footer.html' %}
+
+		</div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>

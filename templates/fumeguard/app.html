@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>App | FumeGuard</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+            {% include 'navbar.html' %}
+
+				<section id="banner">
+					<div class="content">
+						<header>
+							<h2>FumeGuard Dashboard</h2>
+
+                            <br>
+
+                            <div class="dropdown">
+                                <button onclick="drop_down()" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></button>
+                              <div id="guild_drop_down" class="dropdown-content">
+                                {% for guild in guilds %}
+                                    <a href="{{ url_for('fumeguard._settings', guild_id=guild[0]) }}">{{ guild[1] }}</a>
+                                {% endfor %}
+                              </div>
+                            </div>
+
+                        </header>
+						<span class="image">
+                            <img alt="logo" src="/assets/images/FumeGuard.png">
+                        </span>
+					</div>
+                </section>
+
+       			{% include 'footer.html' %}
+
+		</div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>

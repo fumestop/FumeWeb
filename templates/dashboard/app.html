@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>App | FumeStop</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+            {% include 'navbar.html' %}
+
+				<section id="banner">
+					<div class="content">
+						<header>
+                            <h2>Hello, {{ user.display_name }} <code>@{{ user.name }}</code>! &#128075;</h2>
+
+                            <br>
+
+                            <div class="dropdown">
+                              <button onclick="drop_down()" class="button primary">Choose a bot <i class="fa-solid fa-caret-down"></i></button>
+                              <div id="guild_drop_down" class="dropdown-content">
+                                  <a href="{{ url_for('fumeguard._app') }}">FumeGuard</a>
+                                  <a href="{{ url_for('fumetune._app') }}">FumeTune</a>
+                              </div>
+                            </div>
+
+                        </header>
+						<span class="image">
+                            <img alt="logo" src="{{ user.avatar_url or user.default_avatar_url }}">
+                        </span>
+					</div>
+                </section>
+
+       			{% include 'footer.html' %}
+
+		</div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>

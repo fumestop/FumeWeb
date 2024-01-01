@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Settings | FumeGuard</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+            {% include 'navbar.html' %}
+
+            <div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>FumeGuard Settings</h2>
+							<p>Set or update the moderation and member logging channels here!</p>
+						</header>
+
+                        <section>
+                            <h2>Moderation Logging Channel</h2>
+                            <h4><i>Current: <code>{{ current_mod_log_channel }}</code></i></h4>
+                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='mod_log_channel') }}">
+                                    {{ mod_log_form.hidden_tag() }}
+									<div class="row gtr-uniform gtr-50">
+										<div class="col-6">
+                                            {{ mod_log_form.channel }}
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><input type="submit" value="Update" class="primary" /></li>
+												<li><input type="reset" value="Reset" /></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+                        </section>
+
+                        <hr>
+
+                        <section>
+                            <h2>User Logging Channel</h2>
+                            <h4><i>Current: <code>{{ current_member_log_channel }}</code></i></h4>
+                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='member_log_channel') }}">
+                                    {{ member_log_form.hidden_tag() }}
+									<div class="row gtr-uniform gtr-50">
+										<div class="col-6">
+                                            {{ member_log_form.channel }}
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><input type="submit" value="Update" class="primary" /></li>
+												<li><input type="reset" value="Reset" /></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+                        </section>
+
+
+                    </div>
+
+		    </div>
+
+            {% include 'footer.html' %}
+
+        </div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>
