@@ -17,14 +17,23 @@
 
                             <br>
 
-                            <div class="dropdown">
-                                <button onclick="drop_down()" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></button>
-                              <div id="guild_drop_down" class="dropdown-content">
-                                {% for guild in guilds %}
-                                    <a href="{{ url_for('fumeguard._settings', guild_id=guild[0]) }}">{{ guild[1] }}</a>
-                                {% endfor %}
-                              </div>
-                            </div>
+                            {% if not guilds %}
+                                <h3>It looks like you do not share any servers with FumeGuard <br>
+                                    where you have the <code>Manage Server</code> permission.</h3>
+
+                            {% else %}
+                                <h3>Select a server to manage FumeGuard's settings. You need to have the <br>
+                                    <code>Manage Server</code> permission on the server to edit the settings.</h3>
+
+                                <div class="dropdown">
+                                    <button onclick="drop_down()" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></button>
+                                      <div id="guild_drop_down" class="dropdown-content">
+                                        {% for guild in guilds %}
+                                            <a href="{{ url_for('fumeguard._settings', guild_id=guild[0]) }}">{{ guild[1] }}</a>
+                                        {% endfor %}
+                                      </div>
+                                </div>
+                            {% endif %}
 
                         </header>
 						<span class="image">
