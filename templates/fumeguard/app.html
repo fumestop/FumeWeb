@@ -26,12 +26,15 @@
                                     <code>Manage Server</code> permission on the server to edit the settings.</h3>
 
                                 <div class="dropdown">
-                                    <button onclick="drop_down()" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></button>
-                                      <div id="guild_drop_down" class="dropdown-content">
+                                    <div class="dropdown-btn">
+                                        <a href="#" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></a>
+                                    </div>
+
+                                    <div class="dropdown-content">
                                         {% for guild in guilds %}
                                             <a href="{{ url_for('fumeguard._settings', guild_id=guild[0]) }}">{{ guild[1] }}</a>
                                         {% endfor %}
-                                      </div>
+                                    </div>
                                 </div>
                             {% endif %}
 

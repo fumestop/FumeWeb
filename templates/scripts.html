@@ -10,22 +10,10 @@
 <script src="/assets/js/main.js"></script>
 
 <script>
-    function drop_down() {
-        document.getElementById("guild_drop_down").classList.toggle("show");
-    }
+    let btn = document.getElementById("dropdown-btn");
+    let content = document.getElementById("dropdown-content");
 
-    // Close the dropdown menu if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.button')) {
-            let dropdowns = document.getElementsByClassName("dropdown-content");
-            for (let i = 0; i < dropdowns.length; i++) {
-                let openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
+    content.style.minWidth = btn.offsetWidth + "px";
 </script>
 
 {% with messages = get_flashed_messages(with_categories=true) %}

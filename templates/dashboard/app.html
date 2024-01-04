@@ -18,11 +18,14 @@
                             <br>
 
                             <div class="dropdown">
-                              <button onclick="drop_down()" class="button primary">Choose a bot <i class="fa-solid fa-caret-down"></i></button>
-                              <div id="guild_drop_down" class="dropdown-content">
-                                  <a href="{{ url_for('fumeguard._app') }}">FumeGuard</a>
-                                  <a href="{{ url_for('fumetune._app') }}">FumeTune</a>
-                              </div>
+                                <div id="dropdown-btn">
+                                    <a href="#" class="button primary">Choose a bot <i class="fa-solid fa-caret-down"></i></a>
+                                </div>
+
+                                <div id="dropdown-content" class="dropdown-content">
+                                    <a href="{{ url_for('fumeguard._app') }}">FumeGuard</a>
+                                    <a href="{{ url_for('fumetune._app') }}">FumeTune</a>
+                                </div>
                             </div>
 
                         </header>
