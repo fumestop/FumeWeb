@@ -14,7 +14,7 @@
 					<div class="container">
 						<header class="major">
 							<h2>FumeGuard Settings</h2>
-							<p>Set or update the moderation and member logging channels here!</p>
+							<p>Update various settings for your server here!</p>
 						</header>
 
                         <section>
@@ -24,6 +24,7 @@
                                     {{ mod_log_form.hidden_tag() }}
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6">
+                                            {{ mod_log_form.channel.label }}
                                             {{ mod_log_form.channel }}
 										</div>
 										<div class="col-12">
@@ -45,6 +46,7 @@
                                     {{ member_log_form.hidden_tag() }}
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6">
+                                            {{ member_log_form.channel.label }}
                                             {{ member_log_form.channel }}
 										</div>
 										<div class="col-12">
@@ -57,6 +59,27 @@
 								</form>
                         </section>
 
+                        <hr>
+
+                        <section>
+                            <h2>Welcome Message</h2>
+                            <!-- h4><i>Current: <code></code></i></h4 -->
+                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='welcome_message') }}">
+                                    {{ welcome_message_form.hidden_tag() }}
+									<div class="row gtr-uniform gtr-50">
+										<div class="col-6">
+                                            {{ welcome_message_form.message.label }}
+                                            {{ welcome_message_form.message }}
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><input type="submit" value="Update" class="primary" /></li>
+												<li><input type="reset" value="Reset" /></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+                        </section>
 
                     </div>
 

@@ -6,12 +6,24 @@
             <li>
                 <a href="#">Our Bots</a>
                 <ul>
-                    <li><a href="{{ url_for('fumeguard._index') }}">FumeGuard</a></li>
-                    <li><a href="{{ url_for('fumetune._index') }}">FumeTune</a></li>
+                    <li>
+                        <a href="#">FumeGuard</a>
+                        <ul>
+                            <li><a href="{{ url_for('fumeguard._index') }}">Home</a></li>
+                            <li><a href="{{ url_for('fumeguard._invite') }}" target="_blank">Invite</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">FumeTune</a>
+                        <ul>
+                            <li><a href="{{ url_for('fumetune._index') }}">Home</a></li>
+                            <li><a href="{{ url_for('fumetune._invite') }}" target="_blank">Invite</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li><a href="{{ url_for('meta._premium') }}">Premium</a></li>
-			<li><a href="{{ url_for('meta._community') }}">Community</a></li>
+			<li><a href="{{ url_for('meta._community') }}" target="_blank">Community</a></li>
     		<li>
                 <a href="#">Legal</a>
                 <ul>

@@ -31,8 +31,8 @@
                                     </div>
 
                                     <div class="dropdown-content">
-                                        {% for guild in guilds %}
-                                            <a href="{{ url_for('fumeguard._settings', guild_id=guild[0]) }}">{{ guild[1] }}</a>
+                                        {% for _id, _name in guilds.items() %}
+                                            <a href="{{ url_for('fumeguard._settings', guild_id=_id) }}">{{ _name }}</a>
                                         {% endfor %}
                                     </div>
                                 </div>
