@@ -17,28 +17,22 @@
 
                             <br>
 
-                            {% if not guilds %}
-                                <h3>It looks like you do not share any servers with FumeGuard <br>
-                                    where you have the <code>Manage Server</code> permission.</h3>
+                            <h3>Choose whether you would like to update your profile <br>
+                                or manage server settings.</h3>
 
-                            {% else %}
-                                <h3>Select a server to manage FumeGuard's settings. You need to have the <br>
-                                    <code>Manage Server</code> permission on the server to edit the settings.</h3>
-
-                                <div class="dropdown">
-                                    <div class="dropdown-btn">
-                                        <a href="#" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></a>
-                                    </div>
-
-                                    <div class="dropdown-content">
-                                        {% for _id, _name in guilds.items() %}
-                                            <a href="{{ url_for('fumeguard._settings', guild_id=_id) }}">{{ _name }}</a>
-                                        {% endfor %}
-                                    </div>
+                            <div class="dropdown">
+                                <div id="dropdown-btn">
+                                    <a href="#" class="button primary">Select an action <i class="fa-solid fa-caret-down"></i></a>
                                 </div>
-                            {% endif %}
+
+                                <div id="dropdown-content" class="dropdown-content">
+                                    <a href="{{ url_for('fumeguard._profile_home') }}">Update Profile</a>
+                                    <a href="{{ url_for('fumeguard._settings_home') }}">Manage Server Settings</a>
+                                </div>
+                            </div>
 
                         </header>
+
 						<span class="image">
                             <img alt="logo" src="/assets/images/FumeGuard.png">
                         </span>

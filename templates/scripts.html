@@ -11,9 +11,11 @@
 
 <script>
     let btn = document.getElementById("dropdown-btn");
-    let content = document.getElementById("dropdown-content");
 
-    content.style.minWidth = btn.offsetWidth + "px";
+    if (btn) {
+        let content = document.getElementById("dropdown-content");
+        content.style.minWidth = btn.offsetWidth + "px";
+    }
 </script>
 
 {% with messages = get_flashed_messages(with_categories=true) %}

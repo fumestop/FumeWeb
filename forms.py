@@ -1,5 +1,5 @@
 from quart_wtf import QuartForm
-from wtforms import SelectField, HiddenField, TextAreaField
+from wtforms import SelectField, HiddenField, TextAreaField, BooleanField
 from wtforms.validators import Length
 
 
@@ -24,4 +24,16 @@ class WelcomeMessage(QuartForm):
         "Enter the welcome message, which will be DMed to a new member "
         "on joining the server (Leave blank to disable): ",
         validators=[Length(max=1500)],
+    )
+
+
+class AfkToggle(QuartForm):
+    set_afk = BooleanField(
+        "Toggle afk: ",
+        default=False,
+    )
+
+    reason = TextAreaField(
+        "Reason for being afk (Optional): ",
+        validators=[Length(max=100)],
     )

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Profile | FumeGuard</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+            {% include 'navbar.html' %}
+
+            <div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>FumeGuard Settings</h2>
+                            <p>Update your profile for <code>{{ guild_name }}</code> here!</p>
+						</header>
+
+                        <section>
+                            <h2>Afk Status</h2>
+
+                            {% if afk_details %}
+                                <h4><i>Afk Since: <code>{{ afk_details['start'] }}</code></i></h4>
+                                <h4><i>Afk Reason: <code>{{ afk_details['reason'] }}</code></i></h4>
+                            {% endif %}
+
+                            <form method="post" action="{{ url_for('fumeguard._profile_update', guild_id=guild_id, route='toggle_afk') }}">
+                                    {{ afk_toggle_form.hidden_tag() }}
+									<div class="row gtr-uniform gtr-50">
+										<div class="col-6">
+                                            {{ afk_toggle_form.set_afk.label }}
+                                            <label class="switch">
+                                                {{ afk_toggle_form.set_afk }}
+                                                <span class="slider round"></span>
+                                            </label>
+										</div>
+
+                                        <div class="col-6">
+                                            {{ afk_toggle_form.reason.label }}
+                                            {{ afk_toggle_form.reason }}
+										</div>
+
+										<div class="col-12">
+											<ul class="actions">
+												<li><input type="submit" value="Update" class="primary"></li>
+												<li><input type="reset" value="Reset"></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+
+
+                        </section>
+
+                    </div>
+
+		    </div>
+
+            {% include 'footer.html' %}
+
+        </div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>

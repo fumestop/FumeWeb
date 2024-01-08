@@ -5,7 +5,7 @@ from quartcord import Unauthorized, requires_authorization
 
 from blueprints.fumeguard import fumeguard_bp
 
-from forms import ModLogChannel, MemberLogChannel, WelcomeMessage
+from forms import ModLogChannel, MemberLogChannel, WelcomeMessage, AfkToggle
 from factory import discord, fumeguard_client
 from utils import unauthorized
 
@@ -37,20 +37,148 @@ async def _invite():
 @requires_authorization
 async def _app():
     user = await discord.fetch_user()
-
-    r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
-    mutual_guilds = r.response["guilds"]
-
-    return await render_template("fumeguard/app.html", user=user, guilds=mutual_guilds)
+    return await render_template("fumeguard/app.html", user=user)
 
 
-@fumeguard_bp.route("/fumeguard/app/settings/<guild_id>")
+@fumeguard_bp.route("/fumeguard/profile")
 @requires_authorization
-async def _settings(guild_id):
+async def _profile_home():
     user = await discord.fetch_user()
 
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["bot_manage_nicknames"]:
+            mutual_guilds.pop(_id)
+
+    return await render_template("fumeguard/profile-home.html", user=user, guilds=mutual_guilds)
+
+
+@fumeguard_bp.route("/fumeguard/app/profile/<guild_id>")
+@requires_authorization
+async def _profile_guild(guild_id: int):
+    user = await discord.fetch_user()
+
+    r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
+    mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["bot_manage_nicknames"]:
+            mutual_guilds.pop(_id)
+
+    if guild_id in mutual_guilds.keys():
+        guild_id = int(guild_id)
+
+        afk_toggle_form = await AfkToggle().create_form()
+
+        r = await fumeguard_client.request("is_afk", user_id=user.id, guild_id=guild_id)
+        is_afk = r.response["afk"]
+        afk_details = None
+
+        if is_afk:
+            r = await fumeguard_client.request("get_afk_details", user_id=user.id, guild_id=guild_id)
+            afk_details = r.response["details"]
+
+            afk_toggle_form.set_afk.default = True
+            afk_toggle_form.reason.default = afk_details["reason"]
+            afk_toggle_form.reason.render_kw = {"disabled": "disabled"}
+            afk_toggle_form.process()
+
+        return await render_template(
+            "fumeguard/profile-update.html",
+            guild_id=guild_id,
+            guild_name=mutual_guilds[str(guild_id)]["name"],
+            afk_details=afk_details,
+            afk_toggle_form=afk_toggle_form,
+        )
+
+    else:
+        return redirect(url_for("fumeguard._app"))
+
+
+@fumeguard_bp.route("/fumeguard/app/profile/<guild_id>/update/<route>", methods=["POST"])
+@requires_authorization
+async def _profile_update(guild_id: str, route: str):
+    user = await discord.fetch_user()
+
+    r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
+    mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["bot_manage_nicknames"]:
+            mutual_guilds.pop(_id)
+
+    if guild_id in mutual_guilds.keys():
+        guild_id = int(guild_id)
+
+        if route == "toggle_afk":
+            afk_toggle_form = await AfkToggle().create_form()
+
+            if await afk_toggle_form.validate_on_submit():
+                set_afk = afk_toggle_form.set_afk.data
+                reason = afk_toggle_form.reason.data or "Unspecified."
+
+                r = await fumeguard_client.request("is_afk", user_id=user.id, guild_id=guild_id)
+                is_afk = r.response["afk"]
+
+                if set_afk == is_afk:
+                    if is_afk:
+                        await flash(
+                            "You are already AFK in this server.",
+                            "warning",
+                        )
+
+                    else:
+                        await flash(
+                            "You are not AFK in this server.",
+                            "warning",
+                        )
+
+                    return redirect(url_for("fumeguard._profile_guild", guild_id=guild_id))
+
+                r = await fumeguard_client.request("toggle_afk", user_id=user.id, guild_id=guild_id, reason=reason)
+
+                if r.response["status"] == 200:
+                    await flash("AFK status has been updated.", "success")
+                    return redirect(url_for("fumeguard._profile_guild", guild_id=guild_id))
+
+                else:
+                    await flash(
+                        "An error occurred while processing your request.", "error"
+                    )
+                    return redirect(url_for("fumeguard._profile_guild", guild_id=guild_id))
+
+        else:
+            return redirect(url_for("fumeguard._profile_home"))
+
+
+@fumeguard_bp.route("/fumeguard/settings")
+@requires_authorization
+async def _settings_home():
+    user = await discord.fetch_user()
+
+    r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
+    mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["member_manage_guild"]:
+            mutual_guilds.pop(_id)
+
+    return await render_template("fumeguard/settings-home.html", user=user, guilds=mutual_guilds)
+
+
+@fumeguard_bp.route("/fumeguard/app/settings/<guild_id>")
+@requires_authorization
+async def _settings_guild(guild_id: str):
+    user = await discord.fetch_user()
+
+    r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
+    mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["member_manage_guild"]:
+            mutual_guilds.pop(_id)
 
     if guild_id in mutual_guilds.keys():
         guild_id = int(guild_id)
@@ -58,7 +186,7 @@ async def _settings(guild_id):
         r = await fumeguard_client.request("get_channel_list", guild_id=guild_id)
 
         if "error" in r.response:
-            return redirect(url_for("fumeguard._app"))
+            return redirect(url_for("fumeguard._settings_home"))
 
         channels = list()
 
@@ -111,8 +239,9 @@ async def _settings(guild_id):
         welcome_message_form.process()
 
         return await render_template(
-            "fumeguard/settings.html",
+            "fumeguard/settings-update.html",
             guild_id=guild_id,
+            guild_name=mutual_guilds[str(guild_id)]["name"],
             mod_log_form=mod_log_form,
             member_log_form=member_log_form,
             welcome_message_form=welcome_message_form,
@@ -121,18 +250,22 @@ async def _settings(guild_id):
         )
 
     else:
-        return redirect(url_for("fumeguard._app"))
+        return redirect(url_for("fumeguard._settings_home"))
 
 
 @fumeguard_bp.route(
     "/fumeguard/app/settings/<guild_id>/update/<route>", methods=["POST"]
 )
 @requires_authorization
-async def _update(guild_id, route):
+async def _settings_update(guild_id: int, route: str):
     user = await discord.fetch_user()
 
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
+
+    for _id, _details in mutual_guilds.items():
+        if not _details["member_manage_guild"]:
+            mutual_guilds.pop(_id)
 
     if guild_id in mutual_guilds.keys():
         guild_id = int(guild_id)
@@ -156,7 +289,7 @@ async def _update(guild_id, route):
                         "The channel you selected is already the current moderation log channel.",
                         "warning",
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 r = await fumeguard_client.request(
                     "update_mod_log_channel", guild_id=guild_id, channel_id=channel_id
@@ -164,13 +297,13 @@ async def _update(guild_id, route):
 
                 if r.response["status"] == 200:
                     await flash("Moderation log channel has been updated.", "success")
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 else:
                     await flash(
                         "An error occurred while processing your request.", "error"
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
         elif route == "member_log_channel":
             member_log_form = await MemberLogChannel().create_form()
@@ -191,7 +324,7 @@ async def _update(guild_id, route):
                         "The channel you selected is already the current member log channel.",
                         "warning",
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 r = await fumeguard_client.request(
                     "update_member_log_channel",
@@ -201,13 +334,13 @@ async def _update(guild_id, route):
 
                 if r.response["status"] == 200:
                     await flash("Member log channel has been updated.", "success")
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 else:
                     await flash(
                         "An error occurred while processing your request.", "error"
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
         elif route == "welcome_message":
             welcome_message_form = await WelcomeMessage().create_form()
@@ -225,7 +358,7 @@ async def _update(guild_id, route):
                         "The message you entered is already the current welcome message.",
                         "warning",
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 r = await fumeguard_client.request(
                     "update_welcome_message",
@@ -235,19 +368,19 @@ async def _update(guild_id, route):
 
                 if r.response["status"] == 200:
                     await flash("Welcome message has been updated.", "success")
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
                 else:
                     await flash(
                         "An error occurred while processing your request.", "error"
                     )
-                    return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+                    return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
         else:
-            return redirect(url_for("fumeguard._settings", guild_id=guild_id))
+            return redirect(url_for("fumeguard._settings_guild", guild_id=guild_id))
 
     else:
-        return redirect(url_for("fumeguard._app"))
+        return redirect(url_for("fumeguard._settings_home"))
 
 
 # noinspection PyUnusedLocal

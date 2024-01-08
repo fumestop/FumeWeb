@@ -14,13 +14,13 @@
 					<div class="container">
 						<header class="major">
 							<h2>FumeGuard Settings</h2>
-							<p>Update various settings for your server here!</p>
+                            <p>Update various settings for <code>{{ guild_name }}</code> here!</p>
 						</header>
 
                         <section>
                             <h2>Moderation Logging Channel</h2>
                             <h4><i>Current: <code>{{ current_mod_log_channel }}</code></i></h4>
-                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='mod_log_channel') }}">
+                            <form method="post" action="{{ url_for('fumeguard._settings_update', guild_id=guild_id, route='mod_log_channel') }}">
                                     {{ mod_log_form.hidden_tag() }}
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6">
@@ -42,7 +42,7 @@
                         <section>
                             <h2>User Logging Channel</h2>
                             <h4><i>Current: <code>{{ current_member_log_channel }}</code></i></h4>
-                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='member_log_channel') }}">
+                            <form method="post" action="{{ url_for('fumeguard._settings_update', guild_id=guild_id, route='member_log_channel') }}">
                                     {{ member_log_form.hidden_tag() }}
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6">
@@ -64,7 +64,7 @@
                         <section>
                             <h2>Welcome Message</h2>
                             <!-- h4><i>Current: <code></code></i></h4 -->
-                            <form method="post" action="{{ url_for('fumeguard._update', guild_id=guild_id, route='welcome_message') }}">
+                            <form method="post" action="{{ url_for('fumeguard._settings_update', guild_id=guild_id, route='welcome_message') }}">
                                     {{ welcome_message_form.hidden_tag() }}
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6">

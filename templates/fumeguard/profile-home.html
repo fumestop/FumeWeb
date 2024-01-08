@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Profile | FumeGuard</title>
+        {% include 'header.html' %}
+    </head>
+
+    <body class="is-preload landing">
+        <div id="page-wrapper">
+
+            {% include 'navbar.html' %}
+
+				<section id="banner">
+					<div class="content">
+						<header>
+							<h2>FumeGuard Dashboard</h2>
+
+                            <br>
+
+                            {% if not guilds %}
+                                <h3>It looks like you do not share any servers with FumeGuard <br>
+                                    where the bot has the <code>Manage Nicknames</code> permission.</h3>
+
+                            {% else %}
+                                <h3>Select a server to manage your profile on. The bot needs to have the <br>
+                                    <code>Manage Nicknames</code> permission on the server to edit your profile.</h3>
+
+                                <div class="dropdown">
+                                    <div class="dropdown-btn">
+                                        <a href="#" class="button primary">Select a Server <i class="fa-solid fa-caret-down"></i></a>
+                                    </div>
+
+                                    <div class="dropdown-content">
+                                        {% for _id, _details in guilds.items() %}
+                                            <a href="{{ url_for('fumeguard._profile_guild', guild_id=_id) }}">{{ _details["name"] }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </header>
+						<span class="image">
+                            <img alt="logo" src="/assets/images/FumeGuard.png">
+                        </span>
+					</div>
+                </section>
+
+       			{% include 'footer.html' %}
+
+		</div>
+
+		{% include 'scripts.html' %}
+
+	</body>
+</html>
