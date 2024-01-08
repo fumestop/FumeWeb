@@ -6,7 +6,7 @@ from blueprints.dashboard import dashboard_bp
 from factory import discord
 
 
-@dashboard_bp.route("/app")
+@dashboard_bp.route("/app/")
 @requires_authorization
 async def _app():
     user = await discord.fetch_user()

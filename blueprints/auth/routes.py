@@ -7,7 +7,7 @@ from factory import discord
 from utils import logged_in
 
 
-@auth_bp.route("/login")
+@auth_bp.route("/login/")
 async def _login():
     if logged_in():
         return redirect(url_for("dashboard._app"))
@@ -17,14 +17,14 @@ async def _login():
     )  # , prompt=False)
 
 
-@auth_bp.route("/logout")
+@auth_bp.route("/logout/")
 async def _logout():
     discord.revoke()
     await flash("You have been successfully logged out.", "success")
     return redirect(url_for("meta._index"))
 
 
-@auth_bp.route("/callback")
+@auth_bp.route("/callback/")
 async def _callback():
     try:
         await discord.callback()

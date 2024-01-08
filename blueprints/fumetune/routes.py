@@ -7,7 +7,7 @@ from factory import fumetune_client
 from utils import unauthorized
 
 
-@fumetune_bp.route("/fumetune")
+@fumetune_bp.route("/fumetune/")
 async def _index():
     r = await fumetune_client.request("get_guild_count")
     server_count = r.response["count"]
@@ -25,12 +25,12 @@ async def _index():
     )
 
 
-@fumetune_bp.route("/fumetune/invite")
+@fumetune_bp.route("/fumetune/invite/")
 async def _invite():
     return redirect(current_app.config["FUMETUNE_INVITE_URL"])
 
 
-@fumetune_bp.route("/fumetune/app")
+@fumetune_bp.route("/fumetune/app/")
 @requires_authorization
 async def _app():
     return await render_template("fumetune/app.html")
