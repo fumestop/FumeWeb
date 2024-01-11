@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
         <title>Profile | FumeGuard</title>
-        {% include 'header.html' %}
+        {% include "header.html" %}
     </head>
 
     <body class="is-preload landing">
         <div id="page-wrapper">
 
-            {% include 'navbar.html' %}
+            {% include "navbar.html" %}
 
             <div id="main" class="wrapper style1">
 					<div class="container">
@@ -21,8 +21,8 @@
                             <h2>Afk Status</h2>
 
                             {% if afk_details %}
-                                <h4><i>Afk Since: <code>{{ afk_details['start'] }}</code></i></h4>
-                                <h4><i>Afk Reason: <code>{{ afk_details['reason'] }}</code></i></h4>
+                                <h4><i>Afk Since: <code>{{ afk_details["start"] }}</code></i></h4>
+                                <h4><i>Afk Reason: <code>{{ afk_details["reason"] }}</code></i></h4>
                             {% endif %}
 
                             <form method="post" action="{{ url_for('fumeguard._profile_update', guild_id=guild_id, route='toggle_afk') }}">
@@ -57,11 +57,11 @@
 
 		    </div>
 
-            {% include 'footer.html' %}
+            {% include "footer.html" %}
 
         </div>
 
-		{% include 'scripts.html' %}
+		{% include "scripts.html" %}
 
 	</body>
 </html>
