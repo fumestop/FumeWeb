@@ -48,7 +48,7 @@ async def _profile_home():
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["bot_manage_nicknames"]:
             mutual_guilds.pop(_id)
 
@@ -65,7 +65,7 @@ async def _profile_guild(guild_id: int):
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["bot_manage_nicknames"]:
             mutual_guilds.pop(_id)
 
@@ -111,7 +111,7 @@ async def _profile_update(guild_id: str, route: str):
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["bot_manage_nicknames"]:
             mutual_guilds.pop(_id)
 
@@ -177,7 +177,7 @@ async def _settings_home():
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["member_manage_guild"]:
             mutual_guilds.pop(_id)
 
@@ -194,7 +194,7 @@ async def _settings_guild(guild_id: str):
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["member_manage_guild"]:
             mutual_guilds.pop(_id)
 
@@ -281,7 +281,7 @@ async def _settings_update(guild_id: int, route: str):
     r = await fumeguard_client.request("get_mutual_guilds", user_id=user.id)
     mutual_guilds = r.response["guilds"]
 
-    for _id, _details in mutual_guilds.items():
+    for _id, _details in mutual_guilds.copy().items():
         if not _details["member_manage_guild"]:
             mutual_guilds.pop(_id)
 
