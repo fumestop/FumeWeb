@@ -33,8 +33,15 @@ async def _callback():
         await flash("You cancelled the request to login.", "error")
         return redirect(url_for("meta._index"))
 
-    user = await discord.fetch_user()
-    await user.add_to_guild(current_app.config["COMMUNITY_SERVER_ID"])
-
     await flash("You have successfully logged in.", "success")
+
+    user = await discord.fetch_user()
+    m = await user.add_to_guild(current_app.config["COMMUNITY_SERVER_ID"])
+
+    if m:
+        await flash(
+            f"You have been added to our community server!",
+            "success",
+        )
+
     return redirect(url_for("dashboard._app"))
