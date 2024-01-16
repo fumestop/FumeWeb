@@ -33,6 +33,16 @@ async def _invite():
     return redirect(current_app.config["FUMEGUARD_INVITE_URL"])
 
 
+@fumeguard_bp.route("/fumeguard/vote/")
+async def _vote():
+    return redirect(current_app.config["FUMEGUARD_VOTE_URL"])
+
+
+@fumeguard_bp.route("/fumeguard/review/")
+async def _review():
+    return redirect(current_app.config["FUMEGUARD_REVIEW_URL"])
+
+
 @fumeguard_bp.route("/fumeguard/app/")
 @requires_authorization
 async def _app():

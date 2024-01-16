@@ -30,6 +30,16 @@ async def _invite():
     return redirect(current_app.config["FUMETUNE_INVITE_URL"])
 
 
+@fumetune_bp.route("/fumetune/vote/")
+async def _vote():
+    return redirect(current_app.config["FUMETUNE_VOTE_URL"])
+
+
+@fumetune_bp.route("/fumetune/review/")
+async def _review():
+    return redirect(current_app.config["FUMETUNE_REVIEW_URL"])
+
+
 @fumetune_bp.route("/fumetune/app/")
 @requires_authorization
 async def _app():
