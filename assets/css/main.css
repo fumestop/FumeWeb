@@ -20,7 +20,8 @@ section, summary, time, mark, audio, video {
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;}
+	display: block;
+}
 
 body {
 	line-height: 1;
@@ -199,7 +200,7 @@ input, select, textarea {
 		font-family: "Courier New", monospace;
 		font-size: 0.9em;
 		margin: 0 0.25em;
-		padding: 0.25em 0.65em;
+		padding: 0.25em 0.25em;
 	}
 
 	pre {
@@ -2850,7 +2851,7 @@ input, select, textarea {
 		font-weight: 300;
 		height: 3em;
 		line-height: 3em;
-		padding: 0 2.25em;
+		padding: 0 1.25em;
 		text-align: center;
 		text-decoration: none;
 		white-space: nowrap;
@@ -3889,7 +3890,7 @@ input, select, textarea {
 				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				display: block;
-				height: 44px;
+				height: 75px;
 				left: 0;
 				position: fixed;
 				top: 0;
@@ -3903,8 +3904,8 @@ input, select, textarea {
 					color: #ffffff;
 					display: block;
 					font-weight: 300;
-					height: 44px;
-					line-height: 44px;
+					height: 75px;
+					line-height: 75px;
 					text-align: center;
 				}
 
@@ -3915,7 +3916,7 @@ input, select, textarea {
 
 				#titleBar .toggle {
 					text-decoration: none;
-					height: 60px;
+					height: 75px;
 					left: 0;
 					position: absolute;
 					top: 0;
@@ -3942,14 +3943,14 @@ input, select, textarea {
 						color: rgba(255, 255, 255, 0.5);
 						content: '\f0c9';
 						display: block;
-						font-size: 18px;
-						height: 44px;
+						font-size: 25px;
+						height: 75px;
 						left: 0;
-						line-height: 44px;
+						line-height: 75px;
 						position: absolute;
 						text-align: center;
 						top: 0;
-						width: 54px;
+						width: 60px;
 					}
 
 			#navPanel {
@@ -4074,7 +4075,7 @@ input, select, textarea {
 			input[type="reset"],
 			input[type="button"],
 			.button {
-				padding: 0;
+				padding: 0 0.75em;
 			}
 
 		/* Spotlight */
