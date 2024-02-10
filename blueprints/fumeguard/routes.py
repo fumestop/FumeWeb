@@ -3,7 +3,7 @@ import json
 from quart import current_app, redirect, url_for, render_template, flash
 from quartcord import Unauthorized, requires_authorization
 
-from blueprints.fumeguard import fumeguard_bp
+from . import fumeguard_bp
 
 from forms import ModLogChannel, MemberLogChannel, WelcomeMessage, AfkToggle
 from factory import discord, fumeguard_client
@@ -84,7 +84,9 @@ async def _profile_guild(guild_id: int):
 
         afk_toggle_form = await AfkToggle().create_form()
 
-        r = await fumeguard_client.request("is_afk", user_id=user.id, guild_id=guild_id)
+        r = await fumeguard_client.request(
+            "is_afk", user_id=user.id, guild_id=guild_id
+        )
         is_afk = r.response["afk"]
         afk_details = None
 
@@ -238,7 +240,9 @@ async def _settings_guild(guild_id: str):
             mod_log_form.process()
             current_mod_log_channel = f"# {current_mod_log_channel['name']}"
 
-        r = await fumeguard_client.request("get_member_log_channel", guild_id=guild_id)
+        r = await fumeguard_client.request(
+            "get_member_log_channel", guild_id=guild_id
+        )
         current_member_log_channel = r.response
 
         mod_log_form.choices.data = json.dumps(channels)
@@ -263,7 +267,9 @@ async def _settings_guild(guild_id: str):
         r = await fumeguard_client.request("get_welcome_message", guild_id=guild_id)
         current_welcome_message = r.response
 
-        welcome_message_form.message.default = current_welcome_message["message"] or ""
+        welcome_message_form.message.default = (
+            current_welcome_message["message"] or ""
+        )
         welcome_message_form.process()
 
         return await render_template(
@@ -322,11 +328,15 @@ async def _settings_update(guild_id: int, route: str):
                     )
 
                 r = await fumeguard_client.request(
-                    "update_mod_log_channel", guild_id=guild_id, channel_id=channel_id
+                    "update_mod_log_channel",
+                    guild_id=guild_id,
+                    channel_id=channel_id,
                 )
 
                 if r.response["status"] == 200:
-                    await flash("Moderation log channel has been updated.", "success")
+                    await flash(
+                        "Moderation log channel has been updated.", "success"
+                    )
                     return redirect(
                         url_for("fumeguard._settings_guild", guild_id=guild_id)
                     )

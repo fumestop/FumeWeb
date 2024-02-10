@@ -1,7 +1,7 @@
-from quart import redirect, url_for, current_app, flash
+from quart import redirect, url_for, flash, current_app
 from quartcord import AccessDenied
 
-from blueprints.auth import auth_bp
+from . import auth_bp
 
 from factory import discord
 from utils import logged_in
@@ -36,9 +36,9 @@ async def _callback():
     await flash("You have successfully logged in.", "success")
 
     user = await discord.fetch_user()
-    m = await user.add_to_guild(current_app.config["COMMUNITY_SERVER_ID"])
+    res = await user.add_to_guild(current_app.config["COMMUNITY_GUILD_ID"])
 
-    if m:
+    if res:
         await flash(
             f"You have been added to our community server!",
             "success",

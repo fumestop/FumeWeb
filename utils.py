@@ -1,9 +1,12 @@
+from __future__ import annotations
+from typing import Optional
+
 import json
 
 from factory import discord
 
 
-def on_maintenance(return_data: bool = False):
+def on_maintenance(return_data: Optional[bool] = False) -> bool | dict[str, bool]:
     with open("config.json") as f:
         data = json.load(f)
 
@@ -13,7 +16,7 @@ def on_maintenance(return_data: bool = False):
     return data.get("MAINTENANCE")
 
 
-def toggle_maintenance():
+def toggle_maintenance() -> None:
     data = on_maintenance(return_data=True)
 
     with open("config.json", "w") as f:

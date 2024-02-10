@@ -1,7 +1,7 @@
 from quart import current_app, redirect, url_for, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from blueprints.fumetune import fumetune_bp
+from . import fumetune_bp
 
 from factory import fumetune_client
 from utils import unauthorized

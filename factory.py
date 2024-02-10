@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import Any
+
 import os
 import json
 import click
@@ -8,31 +11,17 @@ from quart import Quart, request, redirect, url_for
 from quartcord import DiscordOAuth2Session
 from quart_wtf import CSRFProtect
 
-from config import (
-    SECRET_KEY,
-    FUMEGUARD_STANDARD_PORT,
-    FUMEGUARD_MULTICAST_PORT,
-    FUMETUNE_STANDARD_PORT,
-    FUMETUNE_MULTICAST_PORT,
-)
+import config
 
-discord = None
-csrf = CSRFProtect()
+discord: DiscordOAuth2Session = Any
+csrf: CSRFProtect = Any
 
-fumeguard_client = Client(
-    secret_key=SECRET_KEY,
-    standard_port=FUMEGUARD_STANDARD_PORT,
-    multicast_port=FUMEGUARD_MULTICAST_PORT,
-)
-
-fumetune_client = Client(
-    secret_key=SECRET_KEY,
-    standard_port=FUMETUNE_STANDARD_PORT,
-    multicast_port=FUMETUNE_MULTICAST_PORT,
-)
+fumeguard_client: Client = Any
+fumetune_client: Client = Any
+fumetool_client: Client = Any
 
 
-def create_app():
+def create_app() -> Quart:
     app = Quart(__name__, static_url_path="/assets", static_folder="assets")
     app.config.from_pyfile("config.py")
 
@@ -42,9 +31,30 @@ def create_app():
         if data.get("QUART_ENV") == "development":
             os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "true"
 
-    global discord, csrf
+    global discord, csrf, fumeguard_client, fumetune_client, fumetool_client
+
     discord = DiscordOAuth2Session(app)
+    csrf = CSRFProtect()
+
     csrf.init_app(app)
+
+    fumeguard_client = Client(
+        secret_key=config.SECRET_KEY,
+        standard_port=config.FUMEGUARD_STANDARD_PORT,
+        multicast_port=config.FUMEGUARD_MULTICAST_PORT,
+    )
+
+    fumetune_client = Client(
+        secret_key=config.SECRET_KEY,
+        standard_port=config.FUMETUNE_STANDARD_PORT,
+        multicast_port=config.FUMETUNE_MULTICAST_PORT,
+    )
+
+    fumetool_client = Client(
+        secret_key=config.SECRET_KEY,
+        standard_port=config.FUMETOOL_STANDARD_PORT,
+        multicast_port=config.FUMETOOL_MULTICAST_PORT,
+    )
 
     @app.before_request
     def _check_maintenance():
@@ -91,11 +101,13 @@ def create_app():
     from blueprints.dashboard import dashboard_bp
     from blueprints.fumeguard import fumeguard_bp
     from blueprints.fumetune import fumetune_bp
+    from blueprints.fumetool import fumetool_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(meta_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(fumeguard_bp)
     app.register_blueprint(fumetune_bp)
+    app.register_blueprint(fumetool_bp)
 
     return app

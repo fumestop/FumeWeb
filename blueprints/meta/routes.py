@@ -1,6 +1,6 @@
 from quart import render_template, redirect, current_app
 
-from blueprints.meta import meta_bp
+from . import meta_bp
 
 from utils import unauthorized
 

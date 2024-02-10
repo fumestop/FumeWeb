@@ -24,6 +24,15 @@
                             <li><a href="{{ url_for('fumetune._review') }}" target="_blank">Review</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#">FumeTool</a>
+                        <ul>
+                            <li><a href="{{ url_for('fumetool._index') }}">Home</a></li>
+                            <li><a href="{{ url_for('fumetool._invite') }}" target="_blank">Invite</a></li>
+                            <li><a href="{{ url_for('fumetool._vote') }}" target="_blank">Vote</a></li>
+                            <li><a href="{{ url_for('fumetool._review') }}" target="_blank">Review</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li><a href="{{ url_for('meta._premium') }}">Premium</a></li>
@@ -45,6 +54,7 @@
                     <ul>
                         <li><a href="{{ url_for('fumeguard._app') }}">FumeGuard</a></li>
                         <li><a href="{{ url_for('fumetune._app') }}">FumeTune</a></li>
+                        <li><a href="{{ url_for('fumetool._app') }}">FumeTool</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ url_for('auth._logout') }}" class="button primary">Logout</a></li>

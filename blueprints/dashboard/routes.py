@@ -1,7 +1,7 @@
 from quart import redirect, url_for, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from blueprints.dashboard import dashboard_bp
+from . import dashboard_bp
 
 from factory import discord
 
