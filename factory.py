@@ -34,8 +34,8 @@ def create_app() -> Quart:
     global discord, csrf, fumeguard_client, fumetune_client, fumetool_client
 
     discord = DiscordOAuth2Session(app)
-    csrf = CSRFProtect()
 
+    csrf = CSRFProtect()
     csrf.init_app(app)
 
     fumeguard_client = Client(
