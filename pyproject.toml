@@ -2,6 +2,10 @@
 name = "FumeWeb"
 version = "1.0.0"
 description = "Web dashboard for all the FumeStop services."
+license = "AGPL-3.0"
+authors = [
+    { name="Sayan Bhattacharyya", email="sayan@sn1f3rt.dev" },
+]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
