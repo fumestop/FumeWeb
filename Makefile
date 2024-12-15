@@ -8,10 +8,13 @@ activate:
 	source .venv/bin/activate
 
 install:
-	uv sync --all-extras --no-dev
+	uv sync --no-dev
 
 install-dev:
 	uv sync --all-extras
+
+install-extras:
+	uv sync --all-extras --no-dev
 
 dev:
 	uv run launcher.py
