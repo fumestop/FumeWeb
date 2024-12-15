@@ -4,9 +4,6 @@ env:
 rmenv:
 	rm -rf .venv
 
-activate:
-	source .venv/bin/activate
-
 install:
 	uv sync --no-dev
 
@@ -20,7 +17,7 @@ dev:
 	uv run launcher.py
 
 prod:
-	hypercorn --bind 0.0.0.0:13132 --certfile cert.pem --keyfile key.pem launcher:app
+	uv run hypercorn --bind 0.0.0.0:13132 --certfile cert.pem --keyfile key.pem launcher:app
 
 format:
 	ruff check --select I --fix .
