@@ -1,5 +1,7 @@
 # FumeWeb
 
+[![ci/gh-actions/ruff](https://github.com/FumeStop/FumeWeb/actions/workflows/ruff.yml/badge.svg)](https://github.com/FumeStop/FumeWeb/actions/workflows/ruff.yml)
+
 > Web dashboard for all the FumeStop services.
 
 ## License
