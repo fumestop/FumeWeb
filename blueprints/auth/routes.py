@@ -1,10 +1,10 @@
-from quart import redirect, url_for, flash, current_app
+from quart import flash, url_for, redirect, current_app
 from quartcord import AccessDenied
 
-from . import auth_bp
-
-from factory import discord
 from utils import logged_in
+from factory import discord
+
+from . import auth_bp
 
 
 @auth_bp.route("/login/")

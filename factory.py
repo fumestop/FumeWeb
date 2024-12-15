@@ -1,15 +1,15 @@
 from __future__ import annotations
+
 from typing import Any
 
 import os
 import json
+
 import click
-
-from discord.ext.ipc import Client
-
-from quart import Quart, request, redirect, url_for
-from quartcord import DiscordOAuth2Session
+from quart import Quart, request, url_for, redirect
 from quart_wtf import CSRFProtect
+from quartcord import DiscordOAuth2Session
+from discord.ext.ipc import Client
 
 import config
 
@@ -98,10 +98,10 @@ def create_app() -> Quart:
 
     from blueprints.auth import auth_bp
     from blueprints.meta import meta_bp
+    from blueprints.fumetool import fumetool_bp
+    from blueprints.fumetune import fumetune_bp
     from blueprints.dashboard import dashboard_bp
     from blueprints.fumeguard import fumeguard_bp
-    from blueprints.fumetune import fumetune_bp
-    from blueprints.fumetool import fumetool_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(meta_bp)

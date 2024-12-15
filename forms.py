@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from wtforms import HiddenField, SelectField, BooleanField, TextAreaField
 from quart_wtf import QuartForm
-from wtforms import SelectField, HiddenField, TextAreaField, BooleanField
 from wtforms.validators import Length
 
 

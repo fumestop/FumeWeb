@@ -1,9 +1,9 @@
-from quart import redirect, url_for, render_template
+from quart import url_for, redirect, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from . import dashboard_bp
-
 from factory import discord
+
+from . import dashboard_bp
 
 
 @dashboard_bp.route("/app/")

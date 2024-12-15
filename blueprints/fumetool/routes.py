@@ -1,10 +1,10 @@
-from quart import current_app, redirect, url_for, render_template
+from quart import url_for, redirect, current_app, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from . import fumetool_bp
-
-from factory import fumetool_client
 from utils import unauthorized
+from factory import fumetool_client
+
+from . import fumetool_bp
 
 
 @fumetool_bp.route("/fumetool/")

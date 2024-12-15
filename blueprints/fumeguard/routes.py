@@ -1,13 +1,13 @@
 import json
 
-from quart import current_app, redirect, url_for, render_template, flash
+from quart import flash, url_for, redirect, current_app, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from . import fumeguard_bp
-
-from forms import ModLogChannel, MemberLogChannel, WelcomeMessage, AfkToggle
-from factory import discord, fumeguard_client
+from forms import AfkToggle, ModLogChannel, WelcomeMessage, MemberLogChannel
 from utils import unauthorized
+from factory import discord, fumeguard_client
+
+from . import fumeguard_bp
 
 
 @fumeguard_bp.route("/fumeguard/")

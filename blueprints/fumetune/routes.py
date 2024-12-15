@@ -1,10 +1,10 @@
-from quart import current_app, redirect, url_for, render_template
+from quart import url_for, redirect, current_app, render_template
 from quartcord import Unauthorized, requires_authorization
 
-from . import fumetune_bp
-
-from factory import fumetune_client
 from utils import unauthorized
+from factory import fumetune_client
+
+from . import fumetune_bp
 
 
 @fumetune_bp.route("/fumetune/")

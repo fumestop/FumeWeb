@@ -1,8 +1,8 @@
-from quart import render_template, redirect, current_app
-
-from . import meta_bp
+from quart import redirect, current_app, render_template
 
 from utils import unauthorized
+
+from . import meta_bp
 
 
 @meta_bp.route("/")
