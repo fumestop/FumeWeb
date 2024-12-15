@@ -3,13 +3,18 @@ name = "FumeWeb"
 version = "1.0.0"
 description = "Web dashboard for all the FumeStop services."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
     "better-ipc",
     "discord-py>=2.4.0",
     "quart>=0.19.9",
     "quart-wtforms>=1.0.3",
     "quartcord>=1.0.1",
+]
+
+[project.optional-dependencies]
+speed = [
+    "uvloop>=0.21.0",
 ]
 
 [tool.uv]
