@@ -9,6 +9,7 @@ import click
 from quart import Quart, request, url_for, redirect
 from quart_wtf import CSRFProtect
 from quartcord import DiscordOAuth2Session
+
 from discord.ext.ipc import Client
 
 import config
