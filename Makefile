@@ -1,16 +1,9 @@
-env:
-	uv venv
-
-rmenv:
-	rm -rf .venv
-
-install:
-	uv sync --no-dev
+install: install-prod
 
 install-dev:
-	uv sync --extra dev
+	uv sync --all-extras
 
-install-extras:
+install-prod:
 	uv sync --all-extras --no-dev
 
 dev:
@@ -19,9 +12,12 @@ dev:
 prod:
 	uv run hypercorn --bind 0.0.0.0:13132 --certfile cert.pem --keyfile key.pem launcher:app
 
-format:
-	ruff check --select I --fix .
-	ruff format .
+lint:
+	uv run ruff check --select I --fix .
+	uv run ruff format .
 
-.PHONY: env rmenv activate install install-dev dev prod format
+clean:
+	rm -f logs/*.log
+
+.PHONY: install install-dev install-prod dev prod lint clean
 .DEFAULT_GOAL := dev
