@@ -12,7 +12,7 @@ from quartcord import DiscordOAuth2Session
 
 from discord.ext.ipc import Client
 
-import config
+from config import Config
 
 discord: DiscordOAuth2Session = Any
 csrf: CSRFProtect = Any
@@ -24,7 +24,7 @@ fumetool_client: Client = Any
 
 def create_app() -> Quart:
     app = Quart(__name__, static_url_path="/assets", static_folder="assets")
-    app.config.from_pyfile("config.py")
+    app.config.from_object(Config)
 
     with open("config.json") as f:
         data = json.load(f)
@@ -40,21 +40,21 @@ def create_app() -> Quart:
     csrf.init_app(app)
 
     fumeguard_client = Client(
-        secret_key=config.SECRET_KEY,
-        standard_port=config.FUMEGUARD_STANDARD_PORT,
-        multicast_port=config.FUMEGUARD_MULTICAST_PORT,
+        secret_key=Config.SECRET_KEY,
+        standard_port=Config.FUMEGUARD_STANDARD_PORT,
+        multicast_port=Config.FUMEGUARD_MULTICAST_PORT,
     )
 
     fumetune_client = Client(
-        secret_key=config.SECRET_KEY,
-        standard_port=config.FUMETUNE_STANDARD_PORT,
-        multicast_port=config.FUMETUNE_MULTICAST_PORT,
+        secret_key=Config.SECRET_KEY,
+        standard_port=Config.FUMETUNE_STANDARD_PORT,
+        multicast_port=Config.FUMETUNE_MULTICAST_PORT,
     )
 
     fumetool_client = Client(
-        secret_key=config.SECRET_KEY,
-        standard_port=config.FUMETOOL_STANDARD_PORT,
-        multicast_port=config.FUMETOOL_MULTICAST_PORT,
+        secret_key=Config.SECRET_KEY,
+        standard_port=Config.FUMETOOL_STANDARD_PORT,
+        multicast_port=Config.FUMETOOL_MULTICAST_PORT,
     )
 
     @app.before_request

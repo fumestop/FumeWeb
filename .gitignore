@@ -161,6 +161,5 @@ cython_debug/
 
 # FumeWeb
 config.json
-config.py
 
 logs/*.log
